@@ -1,0 +1,52 @@
+{
+  "min_packer_version": "0.10.1",
+  "variables": { },
+  "builders": [{
+    "type": "amazon-ebs",
+    "communicator": "ssh",
+    "ssh_pty": true,
+    "region": "us-west-2",
+    "source_ami": "ami-c5af54a5",
+    "instance_type": "m4.large",
+    "ssh_username": "centos",
+    "ami_name": "chef-highperf-centos7-{{isotime \"200601021504\"}}",
+    "ami_description": "High Performance Image for CentOS 7, by Chef",
+    "ami_regions": [
+      "us-west-1",
+      "us-west-2",
+      "us-east-1"
+    ],
+    "ebs_optimized": true,
+    "enhanced_networking": true,
+    "ami_block_device_mappings": [
+      {
+        "device_name": "/dev/sdb",
+        "virtual_name": "ephemeral0"
+      },
+      {
+        "device_name": "/dev/sdc",
+        "virtual_name": "ephemeral1"
+      }
+    ],
+    "tags": {
+    },
+    "ami_groups": [
+      "all"
+    ]
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "scripts/install_prereqs.sh",
+      "destination": "/tmp/install_prereqs.sh"
+    },
+    {
+      "type": "shell",
+      "inline_shebang": "/bin/bash -e",
+      "inline": [
+        "sudo chmod 0755 /tmp/install_prereqs.sh",
+        "sudo /tmp/install_prereqs.sh"
+      ]
+    }
+  ]
+}
