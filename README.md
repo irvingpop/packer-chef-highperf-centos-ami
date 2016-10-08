@@ -12,7 +12,13 @@ Credit to the DCOS team, this project is based on their [CentOS 7 cloud image](h
 # Usage
 
 ## Building your own image
-run `packer build packer.json`
+
+Simply set your `AWS_*` environment variables and run packer
+```
+export AWS_ACCESS_KEY_ID='my_key'
+export AWS_SECRET_ACCESS_KEY='my_secret'
+packer build packer.json
+```
 
 ## Consuming existing AMIs
 
