@@ -37,7 +37,16 @@ echo ">>> Installing DC/OS dependencies and essential packages"
 yum install --assumeyes --tolerant perl tar xz unzip curl bind-utils net-tools ipset libtool-ltdl rsync
 
 echo ">>> Installing things that Irving cares about"
-yum install --assumeyes lvm2 xfsprogs git tuned sysstat iotop perf nc telnet
+yum install --assumeyes lvm2 xfsprogs ntp python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet
+# enable NTP
+systemctl enable ntpd
+
+echo ">>> Installing AWS tools"
+rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+/usr/bin/easy_install --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+for i in `/bin/ls -1 /opt/aws/bin/`; do ln -s /opt/aws/bin/$i /usr/bin/ ; done
+yum install -y awscli atop
+yum-config-manager --disable epel
 
 echo ">>> Installing ChefDK"
 curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh

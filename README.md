@@ -22,8 +22,22 @@ packer build packer.json
 
 ## Consuming existing AMIs
 
-The latest AMIs were published on 2016/10/07:
+### Latest AMIs
+The latest AMIs were published on 2016/10/26:
+| Region    |     AMI      |
+|-----------|--------------|
+| us-east-1 | ami-a2f1aeb5 |
+| us-west-1 | ami-4895de28 |
+| us-west-2 | ami-e6963186 |
 
+Changelog:
+* Update for the "Dirty Cow" Linux kernel vulnerability
+* Install awscli and aws-cfn-bootstrap
+* Install and enable ntp by default
+
+### Previous AMIs:
+
+Published 2016/10/07:
 | Region    |     AMI      |
 |-----------|--------------|
 | us-east-1 | ami-0d206e1a |
