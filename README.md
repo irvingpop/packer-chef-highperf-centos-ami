@@ -24,6 +24,7 @@ packer build packer.json
 
 ### Latest AMIs
 The latest AMIs were published on 2016/10/26:
+
 | Region    |     AMI      |
 |-----------|--------------|
 | us-east-1 | ami-a2f1aeb5 |
@@ -38,6 +39,7 @@ Changelog:
 ### Previous AMIs:
 
 Published 2016/10/07:
+
 | Region    |     AMI      |
 |-----------|--------------|
 | us-east-1 | ami-0d206e1a |
