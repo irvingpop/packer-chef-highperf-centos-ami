@@ -23,6 +23,19 @@ packer build packer.json
 ## Consuming existing AMIs
 
 ### Latest AMIs
+The latest AMIs were published on 2016/12/22:
+
+| Region    |     AMI      |
+|-----------|--------------|
+| us-east-1 | ami-6f3e2378 |
+| us-west-1 | ami-31f8a951 |
+| us-west-2 | ami-8c10a6ec |
+
+Changelog:
+* Update to CentOS 7.3
+* Enable `Multi-queue I/O scheduling for SCSI` which brings significant performance gains to SSD storage: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/7.3_Release_Notes/technology_previews_storage.html
+
+### Previous AMIs
 The latest AMIs were published on 2016/10/26:
 
 | Region    |     AMI      |
