@@ -23,7 +23,24 @@ packer build packer.json
 ## Consuming existing AMIs
 
 ### Latest AMIs
-The latest AMIs were published on 2016/12/22:
+The latest AMIs were published on 2017/02/16:
+
+| Region    |     AMI      |
+|-----------|--------------|
+| us-east-1 | ami-a88c47be |
+| us-west-1 | ami-f0481790 |
+| us-west-2 | ami-6bb7310b |
+
+Changelog:
+* Rebuilding AMIs to get the latest update, of note:
+  * kernel 3.10.0-514.6.1.el7
+  * openssl-libs 1:1.0.1e-60.el7
+  * ntp 4.2.6p5-25.el7.centos.1
+  * chefdk 1.2.22
+
+### Previous AMIs
+
+Published on 2016/12/22:
 
 | Region    |     AMI      |
 |-----------|--------------|
@@ -35,8 +52,8 @@ Changelog:
 * Update to CentOS 7.3
 * Enable `Multi-queue I/O scheduling for SCSI` which brings significant performance gains to SSD storage: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/7.3_Release_Notes/technology_previews_storage.html
 
-### Previous AMIs
-The latest AMIs were published on 2016/10/26:
+
+Published on 2016/10/26:
 
 | Region    |     AMI      |
 |-----------|--------------|
@@ -49,7 +66,6 @@ Changelog:
 * Install awscli and aws-cfn-bootstrap
 * Install and enable ntp by default
 
-### Previous AMIs:
 
 Published 2016/10/07:
 
