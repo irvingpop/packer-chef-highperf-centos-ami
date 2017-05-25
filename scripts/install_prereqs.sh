@@ -4,7 +4,7 @@ set -o errexit -o nounset -o pipefail
 
 echo ">>> Kernel: $(uname -r)"
 echo ">>> Updating system"
-yum update --assumeyes
+yum -y update
 
 # so that the network interfaces are always eth0 not fancy new names
 cat > /etc/default/grub <<EOF
@@ -34,10 +34,10 @@ sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1
 
 echo ">>> Installing DC/OS dependencies and essential packages"
-yum install --assumeyes --tolerant perl tar xz unzip curl bind-utils net-tools ipset libtool-ltdl rsync
+yum -y install --tolerant perl tar xz unzip curl bind-utils net-tools ipset libtool-ltdl rsync
 
 echo ">>> Installing things that Irving cares about"
-yum install --assumeyes lvm2 xfsprogs ntp python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet
+yum -y install lvm2 xfsprogs ntp python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet
 # enable NTP
 systemctl enable ntpd
 
@@ -54,11 +54,24 @@ curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefd
 echo ">>> Adding group [nogroup]"
 /usr/sbin/groupadd -f nogroup
 
+# Pull in latest improvements from DCOS image repo
+# TODO research:  I'm pretty sure these have no impact on a chef server because we have our own logging facility
+echo ">>> Disable rsyslog"
+systemctl disable rsyslog
+
+echo ">>> Set journald limits"
+mkdir -p /etc/systemd/journald.conf.d/
+echo -e "[Journal]\nRateLimitBurst=15000\nRateLimitInterval=30s\nSystemMaxUse=10G" > /etc/systemd/journald.conf.d/dcos-el7.conf
+
+echo ">>> Removing tty requirement for sudo"
+sed -i'' -E 's/^(Defaults.*requiretty)/#\1/' /etc/sudoers
+
+
 echo ">>> Cleaning up SSH host keys"
 shred -u /etc/ssh/*_key /etc/ssh/*_key.pub
 
 echo ">>> Cleaning up accounting files"
-rm -f rm -f /var/run/utmp
+rm -f /var/run/utmp
 >/var/log/lastlog
 >/var/log/wtmp
 >/var/log/btmp
