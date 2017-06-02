@@ -13,7 +13,7 @@
     "ami_description": "High Performance Image for CentOS 7, by Chef",
     "ami_regions": [
       "us-west-1",
-      "us-west-2",
+      "us-east-2",
       "us-east-1"
     ],
     "ebs_optimized": true,

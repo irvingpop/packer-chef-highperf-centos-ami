@@ -13,17 +13,33 @@ Credit to the DCOS team, this project is based on their [CentOS 7 cloud image](h
 
 ## Building your own image
 
-Simply set your `AWS_*` environment variables and run packer
+Simply set your `AWS_*` environment variables and run packer.  The easiest way to do this is to set up your profiles via `aws configure` and then export the correct `AWS_PROFILE` variable.
 ```
-export AWS_ACCESS_KEY_ID='my_key'
-export AWS_SECRET_ACCESS_KEY='my_secret'
+export AWS_PROFILE='myprofile'
 packer build packer.json
 ```
 
 ## Consuming existing AMIs
 
 ### Latest AMIs
-The latest AMIs were published on 2017/02/16:
+The latest AMIs were published on 2017/06/01:
+
+| Region    |     AMI      |
+|-----------|--------------|
+| us-east-1 | ami-b8f9acae |
+| us-west-1 | ami-a21231c2 |
+| us-west-2 | ami-8ee08dee |
+
+Changelog:
+* Rebuilding AMIs to get the latest update, of note:
+  * kernel 3.10.0-514.21.1.el7
+  * sudo 1.8.6p7-22.el7_3
+  * openssl-libs 1.0.1e-60.el7_3.1
+  * chefdk 1.4.3
+
+### Previous AMIs
+
+Published on 2017/02/16:
 
 | Region    |     AMI      |
 |-----------|--------------|
@@ -37,8 +53,6 @@ Changelog:
   * openssl-libs 1:1.0.1e-60.el7
   * ntp 4.2.6p5-25.el7.centos.1
   * chefdk 1.2.22
-
-### Previous AMIs
 
 Published on 2016/12/22:
 
