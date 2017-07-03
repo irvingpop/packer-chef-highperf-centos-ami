@@ -1,5 +1,5 @@
 {
-  "min_packer_version": "0.10.1",
+  "min_packer_version": "1.0.0",
   "variables": { },
   "builders": [{
     "type": "amazon-ebs",
@@ -13,8 +13,10 @@
     "ami_description": "High Performance Image for CentOS 7, by Chef",
     "ami_regions": [
       "us-west-1",
+      "us-east-1",
       "us-east-2",
-      "us-east-1"
+      "eu-west-1",
+      "eu-west-2"
     ],
     "ebs_optimized": true,
     "enhanced_networking": true,

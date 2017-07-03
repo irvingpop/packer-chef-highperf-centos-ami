@@ -21,8 +21,48 @@ packer build packer.json
 
 ## Consuming existing AMIs
 
+### From Terraform
+```
+data "aws_ami" "centos" {
+  most_recent = true
+  owners = ["446539779517"] # Chef success
+
+  filter {
+    name   = "name"
+    values = ["chef-highperf-centos7-*"]
+  }
+}
+
+resource "aws_instance" "web" {
+  ami           = "${data.aws_ami.centos.id}"
+  instance_type = "t2.micro"
+}
+```
+
 ### Latest AMIs
-The latest AMIs were published on 2017/06/01:
+The latest AMIs were published on 2017/07/03:
+
+| Region    |     AMI      |
+|-----------|--------------|
+| eu-west-1 | ami-2a8d6b53 |
+| eu-west-2 | ami-ead2c48e |
+| us-east-1 | ami-4196af57 |
+| us-east-2 | ami-b40d2cd1 |
+| us-west-1 | ami-885f70e8 |
+| us-west-2 | ami-c50b1bbc |
+
+Changelog:
+* Add additional system performance tuning settings as recommended by the Chef Automate engineering team:
+  * Disabling Transparent Huge Pages (THP)
+  * Adjusting Linux VM sysctl settings
+* Removing setting to disable IPv6 as it's now supported in VPCs
+* Publishing to additional AWS regions (us-east-2, eu-west-1, eu-west-2)
+* Rebuilding AMIs to get the latest update, of note:
+  * kernel 3.10.0-514.26.1.el7 (Stack Clash vulnerability)
+  * chefdk 1.5.0 (Chef 12)
+
+### Previous AMIs
+Published on 2017/06/01:
 
 | Region    |     AMI      |
 |-----------|--------------|
@@ -36,8 +76,6 @@ Changelog:
   * sudo 1.8.6p7-22.el7_3
   * openssl-libs 1.0.1e-60.el7_3.1
   * chefdk 1.4.3
-
-### Previous AMIs
 
 Published on 2017/02/16:
 

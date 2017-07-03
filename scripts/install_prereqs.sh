@@ -7,13 +7,14 @@ echo ">>> Updating system"
 yum -y update
 
 # so that the network interfaces are always eth0 not fancy new names
+echo ">>> Updating GRUB settings"
 cat > /etc/default/grub <<EOF
 GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
 GRUB_DEFAULT=saved
 GRUB_DISABLE_SUBMENU=true
 GRUB_TERMINAL_OUTPUT="console"
-GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 biosdevname=0 crashkernel=auto scsi_mod.use_blk_mq=Y"
+GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 biosdevname=0 crashkernel=auto scsi_mod.use_blk_mq=Y transparent_hugepage=never"
 GRUB_DISABLE_RECOVERY="true"
 EOF
 grub2-mkconfig -o /boot/grub2/grub.cfg
@@ -22,29 +23,33 @@ echo ">>> Disabling SELinux"
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 
 echo ">>> Adjusting SSH Daemon Configuration"
-
 sed -i '/^\s*PermitRootLogin /d' /etc/ssh/sshd_config
 echo -e "\nPermitRootLogin without-password" >> /etc/ssh/sshd_config
 
 sed -i '/^\s*UseDNS /d' /etc/ssh/sshd_config
 echo -e "\nUseDNS no" >> /etc/ssh/sshd_config
 
-echo ">>> Disabling IPV6"
-sysctl -w net.ipv6.conf.all.disable_ipv6=1
-sysctl -w net.ipv6.conf.default.disable_ipv6=1
+echo ">>> Setting system performance tunings"
+cat > /etc/sysctl.d/chef-highperf.conf <<EOF
+vm.swappiness=10
+vm.max_map_count=256000
+vm.dirty_ratio=20
+vm.dirty_background_ratio=30
+vm.dirty_expire_centisecs=30000
+EOF
 
-echo ">>> Installing DC/OS dependencies and essential packages"
+echo ">>> Installing OS dependencies and essential packages"
 yum -y install --tolerant perl tar xz unzip curl bind-utils net-tools ipset libtool-ltdl rsync
 
 echo ">>> Installing things that Irving cares about"
-yum -y install lvm2 xfsprogs ntp python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet
+yum -y install lvm2 xfsprogs ntp python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet vim
 # enable NTP
 systemctl enable ntpd
 
 echo ">>> Installing AWS tools"
-rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 /usr/bin/easy_install --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
 for i in `/bin/ls -1 /opt/aws/bin/`; do ln -s /opt/aws/bin/$i /usr/bin/ ; done
+rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum install -y awscli atop
 yum-config-manager --disable epel
 
@@ -65,7 +70,6 @@ echo -e "[Journal]\nRateLimitBurst=15000\nRateLimitInterval=30s\nSystemMaxUse=10
 
 echo ">>> Removing tty requirement for sudo"
 sed -i'' -E 's/^(Defaults.*requiretty)/#\1/' /etc/sudoers
-
 
 echo ">>> Cleaning up SSH host keys"
 shred -u /etc/ssh/*_key /etc/ssh/*_key.pub
