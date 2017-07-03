@@ -44,6 +44,21 @@ The latest AMIs were published on 2017/07/03:
 
 | Region    |     AMI      |
 |-----------|--------------|
+| eu-west-1 | ami-9b9573e2 |
+| eu-west-2 | ami-15d0c671 |
+| us-east-1 | ami-6b71497d |
+| us-east-2 | ami-ed0c2d88 |
+| us-west-1 | ami-9e5d72fe |
+| us-west-2 | ami-9f3121e6 |
+
+Changelog:
+* Add the ENA (10GbE support) network driver to make enhanced networking work with newer instances such as i3
+
+### Previous AMIs
+Published on 2017/07/03:
+
+| Region    |     AMI      |
+|-----------|--------------|
 | eu-west-1 | ami-2a8d6b53 |
 | eu-west-2 | ami-ead2c48e |
 | us-east-1 | ami-4196af57 |
@@ -61,7 +76,6 @@ Changelog:
   * kernel 3.10.0-514.26.1.el7 (Stack Clash vulnerability)
   * chefdk 1.5.0 (Chef 12)
 
-### Previous AMIs
 Published on 2017/06/01:
 
 | Region    |     AMI      |
