@@ -40,7 +40,23 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2017/07/03:
+The latest AMIs were published on 2017/08/01:
+
+| Region    |     AMI      |
+|-----------|--------------|
+| eu-west-1 | ami-60669319 |
+| eu-west-2 | ami-0f3e2f6b |
+| us-east-1 | ami-c39ebab8 |
+| us-east-2 | ami-37193952 |
+| us-west-1 | ami-e2c5ed82 |
+| us-west-2 | ami-0c4eaa74 |
+
+Changelog:
+* Security updates since the last AMI
+* ChefDK 2.0.28 and Chef 13
+
+### Previous AMIs
+Published on 2017/07/03:
 
 | Region    |     AMI      |
 |-----------|--------------|
@@ -54,7 +70,6 @@ The latest AMIs were published on 2017/07/03:
 Changelog:
 * Add the ENA (10GbE support) network driver to make enhanced networking work with newer instances such as i3
 
-### Previous AMIs
 Published on 2017/07/03:
 
 | Region    |     AMI      |

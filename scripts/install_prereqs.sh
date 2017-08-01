@@ -30,9 +30,9 @@ sed -i '/^\s*UseDNS /d' /etc/ssh/sshd_config
 echo -e "\nUseDNS no" >> /etc/ssh/sshd_config
 
 echo ">>> Setting system performance tunings"
-cat > /etc/sysctl.d/chef-highperf.conf <<EOF
+cat > /etc/sysctl.d/00-chef-highperf.conf <<EOF
 vm.swappiness=10
-vm.max_map_count=256000
+vm.max_map_count=262144
 vm.dirty_ratio=20
 vm.dirty_background_ratio=30
 vm.dirty_expire_centisecs=30000
