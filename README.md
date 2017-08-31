@@ -40,7 +40,24 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2017/08/01:
+The latest AMIs were published on 2017/08/31:
+
+| Region    |     AMI      |
+|-----------|--------------|
+| eu-west-1 | ami-9b19e3e2 |
+| eu-west-2 | ami-a8e4f4cc |
+| us-east-1 | ami-53101b28 |
+| us-east-2 | ami-88b89bed |
+| us-west-1 | ami-060b3f66 |
+| us-west-2 | ami-39628841 |
+
+Changelog:
+* Probably the last AMI on CentOS 7.3 before 7.4 comes out
+* Security updates since the last AMI
+* ChefDK 2.1.11
+
+### Previous AMIs
+Published on 2017/08/01:
 
 | Region    |     AMI      |
 |-----------|--------------|
@@ -55,7 +72,6 @@ Changelog:
 * Security updates since the last AMI
 * ChefDK 2.0.28 and Chef 13
 
-### Previous AMIs
 Published on 2017/07/03:
 
 | Region    |     AMI      |
