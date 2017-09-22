@@ -53,29 +53,6 @@ rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum install -y awscli atop dkms
 yum-config-manager --disable epel
 
-echo ">>> Building Amazon ENA driver"
-git clone https://github.com/amzn/amzn-drivers /usr/src/amzn-drivers-1.0.0
-cd /usr/src/amzn-drivers-1.0.0
-
-cat > dkms.conf <<EOF
-PACKAGE_NAME="ena"
-PACKAGE_VERSION="1.0.0"
-CLEAN="make -C kernel/linux/ena clean"
-MAKE="make -C kernel/linux/ena/ BUILD_KERNEL=\${kernelver}"
-BUILT_MODULE_NAME[0]="ena"
-BUILT_MODULE_LOCATION="kernel/linux/ena"
-DEST_MODULE_LOCATION[0]="/updates"
-DEST_MODULE_NAME[0]="ena"
-AUTOINSTALL="yes"
-EOF
-
-yum install -y kernel-headers kernel-devel make
-latest_kernel=`/bin/ls -1tr /boot/initramfs-* | sed -e 's/\/boot\/initramfs-//' -e 's/.img//' | tail -1`
-dkms add -m amzn-drivers -v 1.0.0
-dkms build -m amzn-drivers -v 1.0.0 -k $latest_kernel
-dkms install -m amzn-drivers -v 1.0.0 -k $latest_kernel
-cd
-
 echo ">>> Installing ChefDK"
 curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
 
