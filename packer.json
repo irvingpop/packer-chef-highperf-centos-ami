@@ -31,7 +31,7 @@
       "sriov_support": true,
       "instance_type": "m4.large",
       "region": "us-west-2",
-      "source_ami": "ami-c5af54a5",
+      "source_ami": "ami-cb1ec7b3",
       "ssh_pty": true,
       "ssh_username": "centos",
       "tags": {},
