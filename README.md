@@ -43,12 +43,12 @@ resource "aws_instance" "web" {
 The latest AMIs were published on 2017/11/29:
 
 ```
-eu-west-1: ami-d04bf9a9
-eu-west-2: ami-b37967d7
-us-east-1: ami-6a831c10
-us-east-2: ami-c27158a7
-us-west-1: ami-9b9ba0fb
-us-west-2: ami-c308d1bb
+eu-west-1: ami-b62193cf
+eu-west-2: ami-a17866c5
+us-east-1: ami-2b4dd251
+us-east-2: ami-e5755c80
+us-west-1: ami-b29da6d2
+us-west-2: ami-143ae36c
 ```
 
 Changelog:

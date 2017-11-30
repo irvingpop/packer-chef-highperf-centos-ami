@@ -75,7 +75,8 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 yum install -y docker-ce
 # TODO: docker-compose is installed separately, make sure we track to the latest
 #  via: https://docs.docker.com/compose/install/#install-compose
-sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod a+x /usr/local/bin/docker-compose
 systemctl enable docker
 
 echo ">>> Adding group [nogroup]"
