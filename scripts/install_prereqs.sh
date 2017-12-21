@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -o errexit -o nounset -o pipefail
 
-echo ">>> Kernel: $(uname -r)"
 echo ">>> Updating system"
+# Grab the "Xen" release in order to get a much more modern 4.9 (LTS) kernel
+yum install -y centos-release-xen deltarpm
 yum -y update
 
 # so that the network interfaces are always eth0 not fancy new names
@@ -49,18 +50,17 @@ echo ">>> Installing OS dependencies and essential packages"
 yum -y install --tolerant perl tar xz unzip curl bind-utils net-tools ipset libtool-ltdl rsync
 
 echo ">>> Installing things that Irving cares about"
-yum -y install lvm2 xfsprogs ntp python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet vim
+yum -y install lvm2 xfsprogs python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet vim
 # enable NTP
-systemctl disable chronyd.service
-systemctl enable ntpd.service
+systemctl enable chronyd.service
 
 echo ">>> Installing AWS tools and EPEL-based sysadmin tools"
 /usr/bin/easy_install --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
 for i in `/bin/ls -1 /opt/aws/bin/`; do ln -s /opt/aws/bin/$i /usr/bin/ ; done
 rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum install -y awscli atop dkms bash-completion bash-completion-extras
+yum install -y awscli atop bash-completion bash-completion-extras
 
-echo ">>> Compatibility fixes for newer AWS instances like C5"
+echo ">>> Compatibility fixes for newer AWS instances like C5 and M5"
 # per https://bugs.centos.org/view.php?id=14107&nbn=5
 yum install -y dracut-config-generic
 latest_kernel=$(/bin/ls -1t /boot/initramfs-* | sort | grep -v kdump | sed -e 's/\/boot\/initramfs-//' -e 's/.img//' | tail -1)
@@ -75,9 +75,9 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 yum install -y docker-ce
 # TODO: docker-compose is installed separately, make sure we track to the latest
 #  via: https://docs.docker.com/compose/install/#install-compose
-curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-chmod a+x /usr/local/bin/docker-compose
-systemctl enable docker
+curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
+chmod a+x /usr/bin/docker-compose
+systemctl enable docker.service
 
 echo ">>> Adding group [nogroup]"
 /usr/sbin/groupadd -f nogroup

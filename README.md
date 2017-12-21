@@ -40,7 +40,26 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2017/11/29:
+The latest AMIs were published on 2017/12/21:
+
+```
+eu-west-1: ami-3135b748
+eu-west-2: ami-e6e2fb82
+us-east-1: ami-4583f83f
+us-east-2: ami-9ddcf4f8
+us-west-1: ami-0f90976f
+us-west-2: ami-5378d52b
+```
+
+Changelog:
+* Enable `centos-release-xen` which switches to a much more modern Linux 4.9 (LTS) kernel
+  * Docker now leverages the latest and greatest `overlay2` filesytem and features
+* Switch from NTP to chronyd
+* `docker-compose` now in `/usr/bin` because Redhat stubbornly excludes `/usr/local/bin` from root's PATH
+* docker-ce 17.0.9.1 and docker-compose 0.18.0
+
+### Previous AMIs
+Published on 2017/11/29:
 
 ```
 eu-west-1: ami-b62193cf
@@ -60,7 +79,6 @@ Changelog:
 * Install and start Docker CE (17.0.9) and docker-compose
 * Adding nice bash completions for things like systemd
 
-### Previous AMIs
 Published on 2017/09/22:
 
 | Region    |     AMI      |
