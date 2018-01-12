@@ -40,7 +40,7 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2017/01/11:
+The latest AMIs were published on 2018/01/11:
 
 ```
 eu-west-1: ami-cbd04db2
