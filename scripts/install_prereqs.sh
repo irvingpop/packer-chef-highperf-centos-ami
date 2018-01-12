@@ -3,7 +3,9 @@ set -o errexit -o nounset -o pipefail
 
 echo ">>> Updating system"
 # Grab the "Xen" release in order to get a much more modern 4.9 (LTS) kernel
-yum install -y centos-release-xen deltarpm
+yum install -y centos-release-xen deltarpm yum-utils
+# temporarily enable testing kernels for Meltdown/Spectre updates
+yum-config-manager --enable centos-virt-xen-testing
 yum -y update
 
 # so that the network interfaces are always eth0 not fancy new names
@@ -14,7 +16,7 @@ GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
 GRUB_DEFAULT=saved
 GRUB_DISABLE_SUBMENU=true
 GRUB_TERMINAL_OUTPUT="console"
-GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 biosdevname=0 crashkernel=auto scsi_mod.use_blk_mq=Y transparent_hugepage=never"
+GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 biosdevname=0 crashkernel=auto scsi_mod.use_blk_mq=Y dm_mod.use_blk_mq=y transparent_hugepage=never"
 GRUB_DISABLE_RECOVERY="true"
 EOF
 grub2-mkconfig -o /boot/grub2/grub.cfg

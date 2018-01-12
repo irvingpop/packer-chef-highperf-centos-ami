@@ -40,7 +40,23 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2017/12/21:
+The latest AMIs were published on 2017/01/11:
+
+```
+eu-west-1: ami-cbd04db2
+eu-west-2: ami-db455ebf
+us-east-1: ami-e5c9939f
+us-east-2: ami-74644e11
+us-west-1: ami-0d36356d
+us-west-2: ami-01e55379
+```
+
+Changelog:
+* Update to the 4.9.75 kernel to protect against Meltdown/Spectre
+* docker-ce 17.12.0 and docker-compose 0.18.0
+
+### Previous AMIs
+Published on 2017/12/21:
 
 ```
 eu-west-1: ami-3135b748
@@ -58,7 +74,6 @@ Changelog:
 * `docker-compose` now in `/usr/bin` because Redhat stubbornly excludes `/usr/local/bin` from root's PATH
 * docker-ce 17.0.9.1 and docker-compose 0.18.0
 
-### Previous AMIs
 Published on 2017/11/29:
 
 ```
