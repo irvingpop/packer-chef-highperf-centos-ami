@@ -40,19 +40,19 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2018/01/11:
+The latest AMIs were published on 2018/01/20:
 
 ```
-eu-west-1: ami-cbd04db2
-eu-west-2: ami-db455ebf
-us-east-1: ami-e5c9939f
-us-east-2: ami-74644e11
-us-west-1: ami-0d36356d
-us-west-2: ami-01e55379
+eu-west-1: ami-bfff65c6
+eu-west-2: ami-409c8724
+us-east-1: ami-23aa8159
+us-east-2: ami-8ec5efeb
+us-west-1: ami-634d4003
+us-west-2: ami-10fa4768
 ```
 
 Changelog:
-* Update to the 4.9.75 kernel to protect against Meltdown/Spectre
+* Update to the 4.9.77 kernel to protect against Meltdown/Spectre
 * docker-ce 17.12.0 and docker-compose 0.18.0
 
 ### Previous AMIs
