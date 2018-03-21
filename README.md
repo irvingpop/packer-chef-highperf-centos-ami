@@ -1,10 +1,10 @@
 # High Performance CentOS 7 AMI
 
-The stock RHEL and CentOS AMIs are highly unoptimized and typically out of date.  This project aims to create a high-performance CentOS 7 image that is unencumbered of product codes or other restrictions.
+The stock RHEL and CentOS AMIs are highly unoptimized and typically out of date.  This project aims to create a high-performance CentOS 7 image that is unencumbered of product codes or other restrictions. It now also includes a recent Linux kernel and Docker.
 
 In informal testing (building Chef server clusters) we've been able to cut deploy times by 50%.
 
-These images are built by Chef's Customer Success team for the benifit of our customers.  For that reason, all images include the latest ChefDK :)
+These images are built by Chef's Customer Success team for the benefit of our customers.  For that reason, all images include the latest ChefDK :)
 
 Credit to the DCOS team, this project is based on their [CentOS 7 cloud image](https://github.com/dcos/dcos/tree/master/cloud_images/centos7)
 
@@ -40,7 +40,29 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2018/01/20:
+The latest AMIs were published on 2018/03/21:
+
+```
+ca-central-1: ami-e7db5d83
+eu-central-1: ami-cdb8e826
+eu-west-1: ami-a6c692df
+eu-west-2: ami-a82bcdcf
+eu-west-3: ami-983c8ae5
+us-east-1: ami-b5c413c8
+us-east-2: ami-dd4071b8
+us-west-1: ami-f9eafd99
+us-west-2: ami-0131ad79
+```
+
+Changelog:
+* Publishing to more EU regions as well as Canada
+* kernel 4.9.86
+* docker-ce 17.12.1 and docker-compose 0.18.0
+* cloud-init 0.7.9
+* ChefDK 2.5.3
+
+### Previous AMIs
+Published on 2018/01/20:
 
 ```
 eu-west-1: ami-bfff65c6
@@ -55,7 +77,6 @@ Changelog:
 * Update to the 4.9.77 kernel to protect against Meltdown/Spectre
 * docker-ce 17.12.0 and docker-compose 0.18.0
 
-### Previous AMIs
 Published on 2017/12/21:
 
 ```

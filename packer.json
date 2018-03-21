@@ -13,7 +13,7 @@
           "virtual_name": "ephemeral1"
         }
       ],
-      "ami_description": "High Performance Image for CentOS 7, by Chef",
+      "ami_description": "High Performance Image for CentOS 7, by Chef. Includes the latest 4.9.x kernel and docker.  https://github.com/irvingpop/packer-chef-highperf-centos7-ami",
       "ami_groups": [
         "all"
       ],
@@ -22,8 +22,11 @@
         "us-west-1",
         "us-east-1",
         "us-east-2",
+        "ca-central-1",
         "eu-west-1",
-        "eu-west-2"
+        "eu-west-2",
+        "eu-west-3",
+        "eu-central-1"
       ],
       "communicator": "ssh",
       "ebs_optimized": true,

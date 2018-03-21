@@ -5,7 +5,7 @@ echo ">>> Updating system"
 # Grab the "Xen" release in order to get a much more modern 4.9 (LTS) kernel
 yum install -y centos-release-xen deltarpm yum-utils
 # temporarily enable testing kernels for Meltdown/Spectre updates
-yum-config-manager --enable centos-virt-xen-testing
+yum-config-manager --enable centos-virt-xen-46-testing
 yum -y update
 
 # so that the network interfaces are always eth0 not fancy new names
