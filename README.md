@@ -40,7 +40,31 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2018/03/21:
+The latest AMIs were published on 2018/05/10:
+
+```
+ca-central-1: ami-68ad2d0c
+eu-central-1: ami-93496578
+eu-west-1: ami-6c96a115
+eu-west-2: ami-91b954f6
+eu-west-3: ami-24843559
+us-east-1: ami-5036bf2f
+us-east-2: ami-28e9d44d
+us-west-1: ami-7df7e91d
+us-west-2: ami-24d6a65c
+```
+
+Changelog:
+* Update to CentOS 7.5
+* Return back to using the stock kernel
+* Stop using `net.ifnames=0` as it appears to cause networking issues on M5/C5 instances
+* docker-ce 18.03.1 and docker-compose 1.21.2
+* ChefDK 2.5.3
+
+----
+
+### Previous AMIs
+Published on 2018/03/21:
 
 ```
 ca-central-1: ami-e7db5d83
@@ -57,11 +81,12 @@ us-west-2: ami-0131ad79
 Changelog:
 * Publishing to more EU regions as well as Canada
 * kernel 4.9.86
-* docker-ce 17.12.1 and docker-compose 0.18.0
+* docker-ce 17.12.1 and docker-compose 1.18.0
 * cloud-init 0.7.9
 * ChefDK 2.5.3
 
-### Previous AMIs
+----
+
 Published on 2018/01/20:
 
 ```
@@ -75,7 +100,9 @@ us-west-2: ami-10fa4768
 
 Changelog:
 * Update to the 4.9.77 kernel to protect against Meltdown/Spectre
-* docker-ce 17.12.0 and docker-compose 0.18.0
+* docker-ce 17.12.0 and docker-compose 1.18.0
+
+----
 
 Published on 2017/12/21:
 
@@ -93,7 +120,9 @@ Changelog:
   * Docker now leverages the latest and greatest `overlay2` filesytem and features
 * Switch from NTP to chronyd
 * `docker-compose` now in `/usr/bin` because Redhat stubbornly excludes `/usr/local/bin` from root's PATH
-* docker-ce 17.0.9.1 and docker-compose 0.18.0
+* docker-ce 17.0.9.1 and docker-compose 1.18.0
+
+----
 
 Published on 2017/11/29:
 
@@ -115,6 +144,8 @@ Changelog:
 * Install and start Docker CE (17.0.9) and docker-compose
 * Adding nice bash completions for things like systemd
 
+----
+
 Published on 2017/09/22:
 
 | Region    |     AMI      |
@@ -129,6 +160,8 @@ Published on 2017/09/22:
 Changelog:
 * Based on CentOS 7.4 (kernel 3.10.0-693.2.2.el7)
 * ChefDK 2.3.3
+
+----
 
 Published on 2017/08/31:
 
@@ -146,6 +179,8 @@ Changelog:
 * Security updates since the last AMI
 * ChefDK 2.1.11
 
+----
+
 Published on 2017/08/01:
 
 | Region    |     AMI      |
@@ -161,6 +196,8 @@ Changelog:
 * Security updates since the last AMI
 * ChefDK 2.0.28 and Chef 13
 
+----
+
 Published on 2017/07/03:
 
 | Region    |     AMI      |
@@ -174,6 +211,8 @@ Published on 2017/07/03:
 
 Changelog:
 * Add the ENA (10GbE support) network driver to make enhanced networking work with newer instances such as i3
+
+----
 
 Published on 2017/07/03:
 
@@ -196,6 +235,8 @@ Changelog:
   * kernel 3.10.0-514.26.1.el7 (Stack Clash vulnerability)
   * chefdk 1.5.0 (Chef 12)
 
+----
+
 Published on 2017/06/01:
 
 | Region    |     AMI      |
@@ -210,6 +251,8 @@ Changelog:
   * sudo 1.8.6p7-22.el7_3
   * openssl-libs 1.0.1e-60.el7_3.1
   * chefdk 1.4.3
+
+----
 
 Published on 2017/02/16:
 
@@ -226,6 +269,8 @@ Changelog:
   * ntp 4.2.6p5-25.el7.centos.1
   * chefdk 1.2.22
 
+----
+
 Published on 2016/12/22:
 
 | Region    |     AMI      |
@@ -238,6 +283,8 @@ Changelog:
 * Update to CentOS 7.3
 * Enable `Multi-queue I/O scheduling for SCSI` which brings significant performance gains to SSD storage: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/7.3_Release_Notes/technology_previews_storage.html
 
+
+----
 
 Published on 2016/10/26:
 
@@ -252,6 +299,8 @@ Changelog:
 * Install awscli and aws-cfn-bootstrap
 * Install and enable ntp by default
 
+
+----
 
 Published 2016/10/07:
 

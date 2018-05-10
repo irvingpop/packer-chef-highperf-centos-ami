@@ -2,10 +2,7 @@
 set -o errexit -o nounset -o pipefail
 
 echo ">>> Updating system"
-# Grab the "Xen" release in order to get a much more modern 4.9 (LTS) kernel
-yum install -y centos-release-xen deltarpm yum-utils
-# temporarily enable testing kernels for Meltdown/Spectre updates
-yum-config-manager --enable centos-virt-xen-46-testing
+yum install -y deltarpm yum-utils dracut-config-generic
 yum -y update
 
 # so that the network interfaces are always eth0 not fancy new names
@@ -16,7 +13,7 @@ GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
 GRUB_DEFAULT=saved
 GRUB_DISABLE_SUBMENU=true
 GRUB_TERMINAL_OUTPUT="console"
-GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 biosdevname=0 crashkernel=auto scsi_mod.use_blk_mq=Y dm_mod.use_blk_mq=y transparent_hugepage=never"
+GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 crashkernel=auto scsi_mod.use_blk_mq=Y dm_mod.use_blk_mq=y transparent_hugepage=never"
 GRUB_DISABLE_RECOVERY="true"
 EOF
 grub2-mkconfig -o /boot/grub2/grub.cfg
@@ -64,7 +61,6 @@ yum install -y awscli atop bash-completion bash-completion-extras
 
 echo ">>> Compatibility fixes for newer AWS instances like C5 and M5"
 # per https://bugs.centos.org/view.php?id=14107&nbn=5
-yum install -y dracut-config-generic
 latest_kernel=$(/bin/ls -1t /boot/initramfs-* | sort | grep -v kdump | sed -e 's/\/boot\/initramfs-//' -e 's/.img//' | tail -1)
 echo "Updating the initramfs file for newly installed kernel ${latest_kernel}"
 dracut -f --kver $latest_kernel
@@ -77,17 +73,15 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 yum install -y docker-ce
 # TODO: docker-compose is installed separately, make sure we track to the latest
 #  via: https://docs.docker.com/compose/install/#install-compose
-curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
 chmod a+x /usr/bin/docker-compose
 systemctl enable docker.service
 
 echo ">>> Adding group [nogroup]"
 /usr/sbin/groupadd -f nogroup
 
-# Pull in latest improvements from DCOS image repo
-# TODO research:  I'm pretty sure these have no impact on a chef server because we have our own logging facility
-echo ">>> Disable rsyslog"
-systemctl disable rsyslog
+echo ">>> Disable rsyslog and kdump"
+systemctl disable rsyslog.service kdump.service
 
 echo ">>> Set journald limits"
 mkdir -p /etc/systemd/journald.conf.d/
