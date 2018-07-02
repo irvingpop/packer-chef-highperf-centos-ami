@@ -49,15 +49,17 @@ echo ">>> Installing OS dependencies and essential packages"
 yum -y install --tolerant perl tar xz unzip curl bind-utils net-tools ipset libtool-ltdl rsync
 
 echo ">>> Installing things that Irving cares about"
-yum -y install lvm2 xfsprogs python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet vim
-# enable NTP
+yum -y install lvm2 xfsprogs python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet vim awscli bash-completion
+# fix bug in awscli: https://bugzilla.redhat.com/show_bug.cgi?id=1578083 - 2018/07/02
+cat /usr/lib/python2.7/site-packages/awscli/customizations/s3/transferconfig.py | grep -v -F -x "    'max_bandwidth': None" > /tmp/transferconfig.py && mv /tmp/transferconfig.py /usr/lib/python2.7/site-packages/awscli/customizations/s3/transferconfig.py
+# enable chronyd (better than NTP)
 systemctl enable chronyd.service
 
 echo ">>> Installing AWS tools and EPEL-based sysadmin tools"
 /usr/bin/easy_install --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
 for i in `/bin/ls -1 /opt/aws/bin/`; do ln -s /opt/aws/bin/$i /usr/bin/ ; done
 rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum install -y awscli atop bash-completion bash-completion-extras
+yum install -y atop bash-completion-extras
 
 echo ">>> Compatibility fixes for newer AWS instances like C5 and M5"
 # per https://bugs.centos.org/view.php?id=14107&nbn=5
@@ -66,7 +68,7 @@ echo "Updating the initramfs file for newly installed kernel ${latest_kernel}"
 dracut -f --kver $latest_kernel
 
 echo ">>> Installing ChefDK"
-curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
+curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chef-workstation && rm install.sh
 
 echo ">>> Installing Docker"
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo

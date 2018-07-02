@@ -40,7 +40,29 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were published on 2018/05/10:
+The latest AMIs were Published on 2018/07/02:
+
+```
+ca-central-1: ami-a361e3c7
+eu-central-1: ami-f2a59d19
+eu-west-1: ami-d7dfca3d
+eu-west-2: ami-65886002
+eu-west-3: ami-22c3735f
+us-east-1: ami-4789af38
+us-east-2: ami-56162e33
+us-west-1: ami-c541a0a6
+us-west-2: ami-e315419b
+```
+
+Changelog:
+* Latest CentOS security and bugfix updates
+* Switch from ChefDK to Chef Workstation
+* Fix issue with awscli: [https://access.redhat.com/errata/RHBA-2018:1991]
+
+----
+
+### Previous AMIs
+Published on 2018/05/10:
 
 ```
 ca-central-1: ami-68ad2d0c
@@ -62,8 +84,6 @@ Changelog:
 * ChefDK 2.5.3
 
 ----
-
-### Previous AMIs
 Published on 2018/03/21:
 
 ```
