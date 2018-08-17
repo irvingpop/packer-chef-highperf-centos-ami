@@ -27,7 +27,7 @@
         "eu-west-2",
         "eu-west-3",
         "eu-central-1",
-        "sa-east-1",
+        "sa-east-1"
       ],
       "communicator": "ssh",
       "ebs_optimized": true,

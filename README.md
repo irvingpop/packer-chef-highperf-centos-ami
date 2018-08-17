@@ -40,7 +40,31 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were Published on 2018/07/02:
+The latest AMIs were Published on 2018/08/17:
+
+```
+ca-central-1: ami-0c45a1323d0bef4a3
+eu-central-1: ami-06eb7a21cab41309f
+eu-west-1: ami-0b8ef990b4f6cc2f1
+eu-west-2: ami-0f7061cd93c1719d9
+eu-west-3: ami-0bbbe61cd746a7a40
+sa-east-1: ami-003b10b29322f17ee
+us-east-1: ami-0d9c743093b303d3d
+us-east-2: ami-0e3549bf81da3a5cc
+us-west-1: ami-0a29da21b480d9a6a
+us-west-2: ami-0bdec459b8954e39b
+```
+
+Changelog:
+* Latest security and bugfix updates for all the things
+* Ship new version of awscli: [https://access.redhat.com/errata/RHBA-2018:1991]
+* Add `sa-east-1` region to publishing
+* Add a few more sysadmin convenience packages: lsof, mlocate, nload
+
+----
+
+### Previous AMIs
+Published on 2018/07/02:
 
 ```
 ca-central-1: ami-a361e3c7
@@ -61,7 +85,6 @@ Changelog:
 
 ----
 
-### Previous AMIs
 Published on 2018/05/10:
 
 ```
