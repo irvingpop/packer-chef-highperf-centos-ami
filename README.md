@@ -40,7 +40,29 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were Published on 2018/08/17:
+The latest AMIs were Published on 2018/10/31:
+
+```
+ca-central-1: ami-082b857c6ad643ad5
+eu-central-1: ami-0cb5372cf96c049b5
+eu-west-1: ami-0a1a03058ad1dd657
+eu-west-2: ami-06e54a9d35305fe03
+eu-west-3: ami-01e2c6ae2055c7ad7
+sa-east-1: ami-04be093d34af1162f
+us-east-1: ami-0dd362a0723a5824f
+us-east-2: ami-0bd1af97fd2616315
+us-west-1: ami-0de1be25a7e1e65a5
+us-west-2: ami-05c8e42d85f60b86b
+```
+
+Changelog:
+* Latest security and bugfix updates for all the things
+* Still on CentOS 7.5, as 7.6 is still in beta
+
+----
+
+### Previous AMIs
+Published on 2018/08/17:
 
 ```
 ca-central-1: ami-0c45a1323d0bef4a3
@@ -63,7 +85,6 @@ Changelog:
 
 ----
 
-### Previous AMIs
 Published on 2018/07/02:
 
 ```
