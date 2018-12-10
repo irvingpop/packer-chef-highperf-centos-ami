@@ -13,29 +13,21 @@
           "virtual_name": "ephemeral1"
         }
       ],
-      "ami_description": "High Performance Image for CentOS 7, by Chef. Includes docker, ChefDK and latest security patches.  https://github.com/irvingpop/packer-chef-highperf-centos7-ami",
+      "ami_description": "High Performance Image for AWS Native Chef Server",
       "ami_groups": [
         "all"
       ],
-      "ami_name": "chef-highperf-centos7-{{isotime \"200601021504\"}}",
+      "ami_name": "highperf-centos7-{{isotime \"200601021504\"}}",
       "ami_regions": [
-        "us-west-1",
-        "us-east-1",
-        "us-east-2",
-        "ca-central-1",
-        "eu-west-1",
-        "eu-west-2",
-        "eu-west-3",
-        "eu-central-1",
-        "sa-east-1"
       ],
       "communicator": "ssh",
       "ebs_optimized": true,
       "ena_support": true,
       "sriov_support": true,
-      "instance_type": "m4.large",
-      "region": "us-west-2",
-      "source_ami": "ami-cb1ec7b3",
+      "instance_type": "t3.large",
+      "region": "us-east-1",
+      "subnet_id": "subnet-57bc791f",
+      "source_ami": "ami-0dd362a0723a5824f",
       "ssh_pty": true,
       "ssh_username": "centos",
       "tags": {},
