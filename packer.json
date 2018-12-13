@@ -1,5 +1,5 @@
 {
-  "min_packer_version": "1.1.0",
+  "min_packer_version": "1.3.0",
   "variables": {},
   "builders": [
     {
@@ -13,12 +13,21 @@
           "virtual_name": "ephemeral1"
         }
       ],
-      "ami_description": "High Performance Image for AWS Native Chef Server",
+      "ami_description": "High Performance Image for CentOS 7, by Chef. Includes docker, ChefDK, Puppet, AWS SSM Agent, and latest security patches.  https://github.com/irvingpop/packer-chef-highperf-centos7-ami",
       "ami_groups": [
         "all"
       ],
-      "ami_name": "highperf-centos7-{{isotime \"200601021504\"}}",
+      "ami_name": "chef-highperf-centos7-{{isotime \"200601021504\"}}",
       "ami_regions": [
+        "us-west-1",
+        "us-west-2",
+        "us-east-2",
+        "ca-central-1",
+        "eu-west-1",
+        "eu-west-2",
+        "eu-west-3",
+        "eu-central-1",
+        "sa-east-1"
       ],
       "communicator": "ssh",
       "ebs_optimized": true,
@@ -26,8 +35,7 @@
       "sriov_support": true,
       "instance_type": "t3.large",
       "region": "us-east-1",
-      "subnet_id": "subnet-57bc791f",
-      "source_ami": "ami-0dd362a0723a5824f",
+      "source_ami": "ami-0f08a479491fd8645",
       "ssh_pty": true,
       "ssh_username": "centos",
       "tags": {},
@@ -37,17 +45,26 @@
   "post-processors": [],
   "provisioners": [
     {
-      "destination": "/tmp/install_prereqs.sh",
-      "source": "scripts/install_prereqs.sh",
-      "type": "file"
-    },
-    {
-      "inline": [
-        "sudo chmod 0755 /tmp/install_prereqs.sh",
-        "sudo /tmp/install_prereqs.sh"
-      ],
-      "inline_shebang": "/bin/bash -e",
-      "type": "shell"
+      "type": "shell",
+      "execute_command": "echo 'packer' | sudo -S env {{ .Vars }} {{ .Path }}",
+      "scripts": [
+        "scripts/update_system.sh",
+        "scripts/update_grub.sh",
+        "scripts/disable_selinux.sh",
+        "scripts/config_sshd.sh",
+        "scripts/tune_system.sh",
+        "scripts/install_essentials.sh",
+        "scripts/install_admin_tools.sh",
+        "scripts/install_aws_compatibiliy.sh",
+        "scripts/install_chef.sh",
+        "scripts/install_docker.sh",
+        "scripts/install_puppet.sh",
+        "scripts/install_ssm_agent.sh",
+        "scripts/config_chrony.sh",
+        "scripts/disable_kdump.sh",
+        "scripts/config_journald.sh",
+        "scripts/install_final.sh"
+      ]
     }
   ]
 }
