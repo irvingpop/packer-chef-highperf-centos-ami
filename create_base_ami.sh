@@ -53,9 +53,15 @@ rpm --root="$ROOTFS" --initdb
 rpm --root="$ROOTFS" --nodeps -ivh \
   https://mirrors.edge.kernel.org/centos/7.6.1810/os/x86_64/Packages/centos-release-7-6.1810.2.el7.centos.x86_64.rpm
 yum --installroot="$ROOTFS" --nogpgcheck -y update
-yum --installroot="$ROOTFS" --nogpgcheck -y groupinstall "Minimal Install"
-yum --installroot="$ROOTFS" --nogpgcheck -y install openssh-server grub2 tuned kernel chrony deltarpm yum-utils dracut-config-generic
-yum --installroot="$ROOTFS" -C -y remove NetworkManager firewalld --setopt="clean_requirements_on_remove=1"
+yum --installroot="$ROOTFS" --nogpgcheck -q -y groupinstall "Minimal Install" \
+  --exclude="iwl*firmware" \
+  --exclude="NetworkManager*" \
+  --exclude="alsa-*" \
+  --exclude="aic94xx-firmware*" \
+  --exclude=iprutils \
+  --exclude=ivtv-firmware \
+  --exclude=firewalld
+yum --installroot="$ROOTFS" --nogpgcheck -q -y install grub2 chrony deltarpm yum-utils dracut-config-generic
 
 cp -a /etc/skel/.bash* "${ROOTFS}/root"
 
