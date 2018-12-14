@@ -32,9 +32,10 @@ set -o errexit -o nounset -o pipefail
 #   - Virtualisation type: Hardware-assisted vistualisation
 #
 
-: ${DEVICE:?"ERROR: DEVICE must be set"}
+yum upgrade -y
 
 ROOTFS=/rootfs
+DEVICE="/dev/nvme1n1"
 PARTITION="${DEVICE}p1"
 
 parted -s "$DEVICE" -- \
@@ -53,17 +54,17 @@ rpm --root="$ROOTFS" --initdb
 rpm --root="$ROOTFS" --nodeps -ivh \
   https://mirrors.edge.kernel.org/centos/7.6.1810/os/x86_64/Packages/centos-release-7-6.1810.2.el7.centos.x86_64.rpm
 yum --installroot="$ROOTFS" --nogpgcheck -y update
-yum --installroot="$ROOTFS" --nogpgcheck -q -y groupinstall "Minimal Install" \
+yum --installroot="$ROOTFS" --nogpgcheck -y groupinstall "Minimal Install" \
   --exclude="iwl*firmware" \
   --exclude="NetworkManager*" \
   --exclude="alsa-*" \
   --exclude="aic94xx-firmware*" \
   --exclude=iprutils \
+  --exclude=biosdevname \
   --exclude=ivtv-firmware \
-  --exclude=firewalld
-yum --installroot="$ROOTFS" --nogpgcheck -q -y install grub2 chrony deltarpm yum-utils dracut-config-generic
-
-cp -a /etc/skel/.bash* "${ROOTFS}/root"
+  --exclude="plymouth*"
+yum --installroot="$ROOTFS" -C -y remove firewalld --setopt="clean_requirements_on_remove=1"
+yum --installroot="$ROOTFS" --nogpgcheck -y install grub2 chrony deltarpm yum-utils dracut-config-generic
 
 cat > "${ROOTFS}/etc/hosts" << END
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
@@ -87,8 +88,6 @@ END
 # IPV6INIT="no"
 # PERSISTENT_DHCLIENT="1"
 # END
-
-cp /usr/share/zoneinfo/UTC "${ROOTFS}/etc/localtime"
 
 echo 'ZONE="UTC"' > "${ROOTFS}/etc/sysconfig/clock"
 
@@ -124,6 +123,13 @@ chroot "$ROOTFS" systemctl enable cloud-init.service
 chroot "$ROOTFS" systemctl enable chronyd.service
 chroot "$ROOTFS" systemctl mask tmp.mount
 chroot "$ROOTFS" systemctl set-default multi-user.target
+
+# borrowed from https://github.com/CentOS/sig-cloud-instance-build/blob/master/cloudimg/CentOS-7-x86_64-GenericCloud-201606-r1.ks
+sed -i '/^#NAutoVTs=.*/ a\
+NAutoVTs=0' $ROOTFS/etc/systemd/logind.conf
+
+echo ">>> Disabling SELinux"
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' $ROOTFS/etc/selinux/config
 
 cat > "${ROOTFS}/etc/cloud/cloud.cfg" << END
 users:
