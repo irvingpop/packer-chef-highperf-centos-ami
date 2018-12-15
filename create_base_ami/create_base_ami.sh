@@ -78,17 +78,6 @@ NETWORKING=yes
 NOZEROCONF=yes
 END
 
-# cat > "${ROOTFS}/etc/sysconfig/network-scripts/ifcfg-eth0" << END
-# DEVICE="eth0"
-# BOOTPROTO="dhcp"
-# ONBOOT="yes"
-# TYPE="Ethernet"
-# USERCTL="yes"
-# PEERDNS="yes"
-# IPV6INIT="no"
-# PERSISTENT_DHCLIENT="1"
-# END
-
 echo 'ZONE="UTC"' > "${ROOTFS}/etc/sysconfig/clock"
 
 cat > "${ROOTFS}/etc/fstab" << END
@@ -123,6 +112,12 @@ chroot "$ROOTFS" systemctl enable cloud-init.service
 chroot "$ROOTFS" systemctl enable chronyd.service
 chroot "$ROOTFS" systemctl mask tmp.mount
 chroot "$ROOTFS" systemctl set-default multi-user.target
+
+# Because we're disabling NetworkManager, we encounter this
+#   issue: https://bugs.centos.org/view.php?id=14760
+#   where instances don't get an IPv6 default gateway.
+#  I haven't figured out anything better yet than patching cloud-init in place
+sed -i '/IPV6_AUTOCONF=.*/d' $ROOTFS/usr/lib/python2.7/site-packages/cloudinit/net/sysconfig.py
 
 # borrowed from https://github.com/CentOS/sig-cloud-instance-build/blob/master/cloudimg/CentOS-7-x86_64-GenericCloud-201606-r1.ks
 sed -i '/^#NAutoVTs=.*/ a\
