@@ -12,7 +12,7 @@ yum erase -y awscli python2-botocore python-s3transfer
 curl -sOL https://s3.amazonaws.com/aws-cli/awscli-bundle.zip
 unzip awscli-bundle.zip
 ./awscli-bundle/install -i /usr/local/aws -b /bin/aws
-rm -rf awscli-bundle
+rm -rf awscli-bundle awscli-bundle.zip
 
 echo ">>> Installing AWS CloudFormation Helper Scripts"
 /usr/bin/easy_install --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
@@ -28,4 +28,4 @@ then
 else
     rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 fi
-yum install -y atop bash-completion-extras htop iftop nload tcping
+yum install -y atop bash-completion-extras htop iftop nload tcping jq

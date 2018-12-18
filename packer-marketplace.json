@@ -3,11 +3,11 @@
   "variables": {},
   "builders": [
     {
-      "ami_description": "AWS Native Chef Stack OS 4.0.2",
+      "ami_description": "AWS Native Chef Stack OS 5.0.0",
       "ami_groups": [
         "all"
       ],
-      "ami_name": "aws-native-chef-4.0.2-{{isotime \"200601021504\"}}",
+      "ami_name": "aws-native-chef-server-5.0.{{isotime \"200601021504\"}}",
       "ami_regions": [
       ],
       "communicator": "ssh",
@@ -43,7 +43,6 @@
         "scripts/tune_system.sh",
         "scripts/install_essentials.sh",
         "scripts/install_admin_tools.sh",
-        "scripts/install_aws_compatibiliy.sh",
         "scripts/install_ssm_agent.sh",
         "scripts/config_chrony.sh",
         "scripts/disable_kdump.sh",
