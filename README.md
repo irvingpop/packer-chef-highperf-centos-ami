@@ -40,39 +40,35 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were Published on 2018/12/18:
+The latest AMIs were Published on 2019/02/13:
 
 ```
-ap-northeast-1: ami-0aff6cdef7409384b
-ap-northeast-2: ami-0a7519a39caa763cf
-ap-south-1: ami-0f1f2cbb6520121ec
-ap-southeast-1: ami-01862851f72e48829
-ap-southeast-2: ami-082d22722632a1a88
-ca-central-1: ami-084099074cfe03d29
-eu-central-1: ami-0e117581e9563af5f
-eu-north-1: ami-028a5202d82e84b02
-eu-west-1: ami-0ddc23402bfc1713e
-eu-west-2: ami-06796d787b224578d
-eu-west-3: ami-088f9757dcb904145
-sa-east-1: ami-01a7e80ff07b90d5b
-us-east-1: ami-0046f7d33d7b63774
-us-east-2: ami-0df204de73ba574c6
-us-west-1: ami-072c8477f2f447a65
-us-west-2: ami-04a8ea2e6cac7c58a
+ap-northeast-1: ami-02c58f1040d612a45
+ap-northeast-2: ami-0c3e242e39ef33638
+ap-south-1: ami-0d121b70d4f2a7c07
+ap-southeast-1: ami-0d4af852545da36f7
+ap-southeast-2: ami-0fa6aa803dc7f6191
+ca-central-1: ami-0dfd14de667c4e8c9
+eu-central-1: ami-0ba5a0a4a8e5d70c1
+eu-north-1: ami-00d82e36d4cf13239
+eu-west-1: ami-0355255a4ed05d5af
+eu-west-2: ami-0dd3bbb85610696bb
+eu-west-3: ami-0cb3a832f7fa08045
+sa-east-1: ami-0c7108774ddaedbaf
+us-east-1: ami-062a84bcfcb87a1ab
+us-east-2: ami-05e444eb3b5bb499f
+us-west-1: ami-0719ffe132cd3bc6c
+us-west-2: ami-05178c5d62c39cb82
 ```
 
 Changelog:
-* CentOS 7.6 and all the things updated
-* All build scripts are now modularized, thanks to Siebrand Mazeland (@siebrand)!
-* Fixing a number of networking issues:
-  * Leaving the `ifup-eth0` file caused systemd to consider the network.service to be in a failed state
-  * IPv6 machines didn't receive a default route if NetworkManager is removed
-* Completely revamped base image creator
+* Update for Docker/runc vulnerability
+* kernel 3.10.0-957.5.1.el7
 
 ----
 
 ### Previous AMIs
-See [the CHANGELOG]](./CHANGELOG.md)
+See [the CHANGELOG](./CHANGELOG.md)
 
 ## Contributors
 * Irving Popovetsky (@irvingpop)

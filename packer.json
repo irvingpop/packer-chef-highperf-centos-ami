@@ -48,7 +48,7 @@
           "name": "centos-7-minimal-install-*",
           "root-device-type": "ebs"
         },
-        "owners": ["self", "406084061336"],
+        "owners": ["406084061336"],
         "most_recent": true
       },
       "ssh_pty": true,
