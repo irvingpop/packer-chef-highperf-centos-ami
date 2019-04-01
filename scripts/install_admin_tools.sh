@@ -2,7 +2,7 @@
 set -o errexit -o nounset -o pipefail
 
 echo ">>> Installing things that Irving cares about"
-yum -y install lvm2 xfsprogs python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet vim bash-completion lsof mlocate
+yum -y install lvm2 xfsprogs python-setuptools yum-utils git wget tuned sysstat iotop perf nc telnet vim bash-completion lsof mlocate openssl
 
 echo ">>> Installing things that Siebrand cares about"
 yum install -y bzip2 nfs-utils nmap screen tmpwatch tree zip

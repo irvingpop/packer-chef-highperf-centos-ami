@@ -40,30 +40,33 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were Published on 2019/02/13:
+The latest AMIs were Published on 2019/04/01:
 
 ```
-ap-northeast-1: ami-02c58f1040d612a45
-ap-northeast-2: ami-0c3e242e39ef33638
-ap-south-1: ami-0d121b70d4f2a7c07
-ap-southeast-1: ami-0d4af852545da36f7
-ap-southeast-2: ami-0fa6aa803dc7f6191
-ca-central-1: ami-0dfd14de667c4e8c9
-eu-central-1: ami-0ba5a0a4a8e5d70c1
-eu-north-1: ami-00d82e36d4cf13239
-eu-west-1: ami-0355255a4ed05d5af
-eu-west-2: ami-0dd3bbb85610696bb
-eu-west-3: ami-0cb3a832f7fa08045
-sa-east-1: ami-0c7108774ddaedbaf
-us-east-1: ami-062a84bcfcb87a1ab
-us-east-2: ami-05e444eb3b5bb499f
-us-west-1: ami-0719ffe132cd3bc6c
-us-west-2: ami-05178c5d62c39cb82
+ap-northeast-1: ami-09d14a7a7ec87c08e
+ap-northeast-2: ami-059f1410383ac0827
+ap-south-1: ami-07e6022a390d8691e
+ap-southeast-1: ami-03a67695da4a878fa
+ap-southeast-2: ami-0376d1e5bc0f69727
+ca-central-1: ami-0e4694815e692db5d
+eu-central-1: ami-09012d97374487072
+eu-north-1: ami-0b5a6e05f6cf39474
+eu-west-1: ami-06375d906efb64b71
+eu-west-2: ami-02dbba09f5ba1a146
+eu-west-3: ami-0e9a816bc5d766581
+sa-east-1: ami-00b6b4794bad10c8b
+us-east-1: ami-09304f90bec869f82
+us-east-2: ami-0388099dd805a15d3
+us-west-1: ami-0670cc109c38976c6
+us-west-2: ami-01713c945c2ed35c9
 ```
 
 Changelog:
-* Update for Docker/runc vulnerability
-* kernel 3.10.0-957.5.1.el7
+* Reapply patch to cloud-init where the IPv6 default gateway doesn't appear
+* Security and bug-fix updates
+* Kernel 3.10.0-957.10.1.el7 (CentOS 7.6)
+* Chef Workstation 0.2.53
+* Docker 18.09.4-3.el7 / containerd.io 1.2.5-3.1.el7
 
 ----
 

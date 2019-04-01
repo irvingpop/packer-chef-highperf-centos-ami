@@ -1,5 +1,32 @@
 
 ## Previous AMIs
+Published on 2019/02/13:
+
+```
+ap-northeast-1: ami-02c58f1040d612a45
+ap-northeast-2: ami-0c3e242e39ef33638
+ap-south-1: ami-0d121b70d4f2a7c07
+ap-southeast-1: ami-0d4af852545da36f7
+ap-southeast-2: ami-0fa6aa803dc7f6191
+ca-central-1: ami-0dfd14de667c4e8c9
+eu-central-1: ami-0ba5a0a4a8e5d70c1
+eu-north-1: ami-00d82e36d4cf13239
+eu-west-1: ami-0355255a4ed05d5af
+eu-west-2: ami-0dd3bbb85610696bb
+eu-west-3: ami-0cb3a832f7fa08045
+sa-east-1: ami-0c7108774ddaedbaf
+us-east-1: ami-062a84bcfcb87a1ab
+us-east-2: ami-05e444eb3b5bb499f
+us-west-1: ami-0719ffe132cd3bc6c
+us-west-2: ami-05178c5d62c39cb82
+```
+
+Changelog:
+* Update for Docker/runc vulnerability
+* kernel 3.10.0-957.5.1.el7
+
+----
+
 Published on 2018/12/18:
 
 ```
