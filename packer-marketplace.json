@@ -8,21 +8,25 @@
         "all"
       ],
       "ami_name": "aws-native-chef-server-5.0.{{isotime \"200601021504\"}}",
-      "ami_regions": [
-      ],
       "communicator": "ssh",
       "ebs_optimized": true,
       "ena_support": true,
       "sriov_support": true,
       "instance_type": "t3.large",
       "region": "us-east-1",
+      "ami_regions": [
+        "us-west-2"
+      ],
       "source_ami_filter": {
         "filters": {
           "virtualization-type": "hvm",
           "name": "centos-7-minimal-install-*",
           "root-device-type": "ebs"
         },
-        "owners": ["self", "406084061336"],
+        "owners": [
+          "self",
+          "446539779517"
+        ],
         "most_recent": true
       },
       "ssh_pty": true,

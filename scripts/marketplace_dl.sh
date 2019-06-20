@@ -1,11 +1,11 @@
 #!/bin/bash -x
 set -o errexit -o nounset -o pipefail
 
-VER_MARKETPLACE=5.0.0
-VER_CHEFSERVER=12.18.14
+VER_MARKETPLACE=5.0.2
+VER_CHEFSERVER=12.19.31
 VER_MANAGE=2.5.16
 VER_PJS=2.2.8
-VER_SUPERMARKET=3.1.96
+VER_SUPERMARKET=3.3.3
 
 DL_BASEURL="https://packages.chef.io/files/stable"
 

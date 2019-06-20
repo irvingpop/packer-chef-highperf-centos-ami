@@ -21,7 +21,7 @@
                 {
                     "volume_type": "gp2",
                     "device_name": "/dev/sdf",
-                    "delete_on_termination": false,
+                    "delete_on_termination": true,
                     "volume_size": 8
                 }
             ],
