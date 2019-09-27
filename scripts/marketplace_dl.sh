@@ -1,7 +1,7 @@
 #!/bin/bash -x
 set -o errexit -o nounset -o pipefail
 
-VER_MARKETPLACE=5.0.3
+VER_MARKETPLACE=5.0.4
 VER_CHEFSERVER=12.18.14
 VER_MANAGE=2.5.16
 VER_PJS=2.2.8
