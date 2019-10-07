@@ -44,7 +44,7 @@ curl -s -L https://github.com/chef-customers/aws-signing-proxy/releases/download
 chmod 755 /usr/local/bin/aws-signing-proxy
 
 echo ">>> Installing other necessary packages"
-yum install -y perl perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https perl-Digest-SHA zip unzip
+yum install -y perl perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https perl-Digest-SHA zip unzip python-pip
 
 echo ">>> Installing monitoring tools"
 # Filebeat
