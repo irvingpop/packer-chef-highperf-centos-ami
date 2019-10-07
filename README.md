@@ -40,32 +40,32 @@ resource "aws_instance" "web" {
 ```
 
 ### Latest AMIs
-The latest AMIs were Published on 2019/06/20:
+The latest AMIs were Published on 2019/10/07:
 
 ```
-ap-northeast-1: ami-06a5861a21f2c1989
-ap-northeast-2: ami-007773c5db92d032b
-ap-south-1: ami-0db1403d77d4d0dae
-ap-southeast-1: ami-0c70926a92f7d8686
-ap-southeast-2: ami-07a371cb67c67d306
-ca-central-1: ami-0224c451b7c827ed0
-eu-central-1: ami-091502e79184cf6dc
-eu-north-1: ami-0ee564268ba7f3e26
-eu-west-1: ami-0905bc6e0dac6b284
-eu-west-2: ami-00dfb15d8a057c8b5
-eu-west-3: ami-00d486ef56f7bdec9
-sa-east-1: ami-0e0f6e6c4119a358a
-us-east-1: ami-0212942f6a6dab9d1
-us-east-2: ami-0b8303d2d78a84ede
-us-west-1: ami-04c0e22c2587597a4
-us-west-2: ami-0da8aa7dcc7b39112
+ap-northeast-1: ami-0943c71779148970f
+ap-northeast-2: ami-042714c24ecf25e26
+ap-south-1: ami-08cbb4e76dfee765f
+ap-southeast-1: ami-0f65ac71a3f129066
+ap-southeast-2: ami-0ff11e1be125ada2f
+ca-central-1: ami-0904037074b287caa
+eu-central-1: ami-0901dc2ff46fd73a2
+eu-north-1: ami-0f3c9a76407b25f84
+eu-west-1: ami-0581e1d8ead15c893
+eu-west-2: ami-0f415b06e749438de
+eu-west-3: ami-07eba3d943b8c05cd
+sa-east-1: ami-0bd26fc35cde37dca
+us-east-1: ami-02ddb83ff84ca592a
+us-east-2: ami-04e2458136bbbbaec
+us-west-1: ami-03ec171be9ffd4bdd
+us-west-2: ami-0d280b33e51a94243
 ```
 
 Changelog:
-* Security and bug-fix updates (including RHSA-2019:1481)
-* Kernel 3.10.0-957.21.3.el7 (CentOS 7.6)
-* Chef Workstation 0.4.2 / Puppet Agent 5.5.14 / Amazon SSM Agent 2.3.662.0
-* Docker 18.09.6-3.el7
+* CentOS 7.7 (kernel 3.10.0-1062.1.2.el7)
+* Switch on [Retpoline Spectre V2 mitigation to regain lost performance](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/7.7_release_notes/new_features#enhancement_kernel)
+* Chef Workstation 0.9.42 / Puppet Agent 6.10.0 / Amazon SSM Agent 2.3.714.0
+* Docker 19.03.2-3.el7
 
 ----
 
