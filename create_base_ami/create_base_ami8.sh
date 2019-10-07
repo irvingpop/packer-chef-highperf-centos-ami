@@ -1,5 +1,19 @@
 #!/bin/bash
-set -o errexit -o nounset -o pipefail
+set -o errexit -o pipefail
+
+while getopts ":s:" opt; do
+  case $opt in
+    s) CENTOS_STREAM=$OPTARG ;;
+  esac
+done
+
+if [[ "${CENTOS_STREAM}" == "true" ]]; then
+  release_pkg_url="https://mirrors.edge.kernel.org/centos/8-stream/BaseOS/x86_64/os/Packages/centos-release-stream-8.0-0.1905.0.9.el8.x86_64.rpm"
+  echo "Building CentOS 8 Stream"
+else
+  release_pkg_url="https://mirrors.edge.kernel.org/centos/8.0.1905/BaseOS/x86_64/os/Packages/centos-release-8.0-0.1905.0.9.el8.x86_64.rpm"
+  echo "Building CentOS 8.0"
+fi
 
 yum upgrade -y
 
@@ -20,20 +34,13 @@ mkdir -p "$ROOTFS"
 mount "$PARTITION" "$ROOTFS"
 
 rpm --root="$ROOTFS" --initdb
-rpm --root="$ROOTFS" --nodeps -ivh \
-  https://mirrors.edge.kernel.org/centos/7.6.1810/os/x86_64/Packages/centos-release-7-6.1810.2.el7.centos.x86_64.rpm
+rpm --root="$ROOTFS" --nodeps -ivh $release_pkg_url
 yum --installroot="$ROOTFS" --nogpgcheck -y update
 yum --installroot="$ROOTFS" --nogpgcheck -y groupinstall "Minimal Install" \
   --exclude="iwl*firmware" \
-  --exclude="NetworkManager*" \
-  --exclude="alsa-*" \
-  --exclude="aic94xx-firmware*" \
-  --exclude=iprutils \
-  --exclude=biosdevname \
-  --exclude=ivtv-firmware \
   --exclude="plymouth*"
 yum --installroot="$ROOTFS" -C -y remove firewalld --setopt="clean_requirements_on_remove=1"
-yum --installroot="$ROOTFS" --nogpgcheck -y install grub2 chrony deltarpm yum-utils dracut-config-generic
+yum --installroot="$ROOTFS" --nogpgcheck -y install grub2 chrony yum-utils dracut-config-generic
 
 cat > "${ROOTFS}/etc/hosts" << END
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
@@ -67,10 +74,10 @@ GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
 GRUB_DEFAULT=saved
 GRUB_DISABLE_SUBMENU=true
-GRUB_TERMINAL="serial console"
-GRUB_SERIAL_COMMAND="serial --speed=115200"
-GRUB_CMDLINE_LINUX="console=tty0 crashkernel=auto console=ttyS0,115200"
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 rd.blacklist=nouveau crashkernel=auto"
 GRUB_DISABLE_RECOVERY="true"
+GRUB_ENABLE_BLSCFG=true
 END
 
 chroot "$ROOTFS" grub2-mkconfig -o /boot/grub2/grub.cfg
@@ -81,12 +88,6 @@ chroot "$ROOTFS" systemctl enable cloud-init.service
 chroot "$ROOTFS" systemctl enable chronyd.service
 chroot "$ROOTFS" systemctl mask tmp.mount
 chroot "$ROOTFS" systemctl set-default multi-user.target
-
-# Because we're disabling NetworkManager, we encounter this
-#   issue: https://bugs.centos.org/view.php?id=14760
-#   where instances don't get an IPv6 default gateway.
-#  I haven't figured out anything better yet than patching cloud-init in place
-sed -i '/IPV6_AUTOCONF=.*/d' $ROOTFS/usr/lib/python2.7/site-packages/cloudinit/net/sysconfig.py
 
 # borrowed from https://github.com/CentOS/sig-cloud-instance-build/blob/master/cloudimg/CentOS-7-x86_64-GenericCloud-201606-r1.ks
 sed -i '/^#NAutoVTs=.*/ a\
@@ -102,14 +103,15 @@ users:
 disable_root: 1
 ssh_pwauth:   0
 
-locale_configfile: /etc/sysconfig/i18n
-mount_default_fields: [~, ~, 'auto', 'defaults,nofail', '0', '2']
+mount_default_fields: [~, ~, 'auto', 'defaults,nofail,x-systemd.requires=cloud-init.service', '0', '2']
 resize_rootfs_tmp: /dev
 ssh_deletekeys:   0
 ssh_genkeytypes:  ~
 syslog_fix_perms: ~
+disable_vmware_customization: false
 
 cloud_init_modules:
+ - disk_setup
  - migrator
  - bootcmd
  - write-files
@@ -126,6 +128,7 @@ cloud_config_modules:
  - mounts
  - locale
  - set-passwords
+ - rh_subscription
  - yum-add-repo
  - package-update-upgrade-install
  - timezone
@@ -146,6 +149,7 @@ cloud_final_modules:
  - keys-to-console
  - phone-home
  - final-message
+ - power-state-change
 
 system_info:
   default_user:
