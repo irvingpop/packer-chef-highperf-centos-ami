@@ -7,7 +7,7 @@
             "ami_regions": [
                 "us-west-2"
             ],
-            "ami_name": "centos-8-minimal-install-{{isotime \"200601021504\"}}",
+            "ami_name": "centos-8-stream-minimal-install-{{isotime \"200601021504\"}}",
             "ami_description": "CentOS 8 minimal installation from scratch https://github.com/irvingpop/packer-chef-highperf-centos7-ami",
             "ssh_username": "ec2-user",
             "instance_type": "t3.large",
@@ -37,7 +37,7 @@
     "provisioners": [
         {
             "type": "shell",
-            "execute_command": "sudo -E -S bash -x '{{ .Path }}' -s false",
+            "execute_command": "sudo -E -S bash -x '{{ .Path }}' -s true",
             "script": "create_base_ami8.sh"
         }
     ]
