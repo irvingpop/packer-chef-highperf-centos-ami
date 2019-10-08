@@ -6,7 +6,7 @@ set -o errexit -o nounset -o pipefail
 # - Launch a CentOS AMI, make sure it is a newer type that uses nvme disks (e.g. T3 or M5)
 #   - At launch time, specify attaching a secondary volume that is 8GB.  Do not set the secondary volume to delete on termination.
 # - Log in to your instance and become root (sudo -i)
-# - Update your instance, especially if it is not the latest (< 7.6):  yum upgrade -y
+# - Update your instance, especially if it is not the latest (< 7.7):  yum upgrade -y and reboot
 # - run: curl -O https://raw.githubusercontent.com/irvingpop/packer-chef-highperf-centos7-ami/marketplace/create_base_ami.sh
 # - Find the volume using "lsblk". It's probaly named "nvme1n1"
 # - export DEVICE="/dev/nvme1n1" # export the DEVICE variable for this script
@@ -52,7 +52,7 @@ mount "$PARTITION" "$ROOTFS"
 
 rpm --root="$ROOTFS" --initdb
 rpm --root="$ROOTFS" --nodeps -ivh \
-  https://mirrors.edge.kernel.org/centos/7.6.1810/os/x86_64/Packages/centos-release-7-6.1810.2.el7.centos.x86_64.rpm
+  https://mirrors.edge.kernel.org/centos/7.7.1908/os/x86_64/Packages/centos-release-7-7.1908.0.el7.centos.x86_64.rpm
 yum --installroot="$ROOTFS" --nogpgcheck -y update
 yum --installroot="$ROOTFS" --nogpgcheck -y groupinstall "Minimal Install" \
   --exclude="iwl*firmware" \
