@@ -3,11 +3,11 @@
   "variables": {},
   "builders": [
     {
-      "ami_description": "AWS Native Chef Stack OS 5.0.0",
+      "ami_description": "AWS Native Chef Stack OS 5.1.0",
       "ami_groups": [
         "all"
       ],
-      "ami_name": "aws-native-chef-server-5.0.{{isotime \"200601021504\"}}",
+      "ami_name": "aws-native-chef-server-5.1.{{isotime \"200601021504\"}}",
       "communicator": "ssh",
       "ebs_optimized": true,
       "ena_support": true,

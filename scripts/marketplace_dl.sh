@@ -1,13 +1,14 @@
 #!/bin/bash -x
 set -o errexit -o nounset -o pipefail
 
-VER_MARKETPLACE=5.0.5
-VER_CHEFSERVER=12.18.14
+VER_MARKETPLACE=5.1.0
+VER_CHEFSERVER=13.1.8
 VER_MANAGE=2.5.16
-VER_PJS=2.2.8
-VER_SUPERMARKET=3.3.3
+VER_PJS=3.0.3
+VER_SUPERMARKET=3.3.7
 
-DL_BASEURL="https://packages.chef.io/files/stable"
+DL_BASEURL="https://packages.chef.io/files"
+DL_CHANNEL="stable"
 
 mkdir -p /var/cache/marketplace
 pushd /var/cache/marketplace
@@ -16,23 +17,27 @@ echo ">>> Writing out a timestamp"
 echo "This package cache was generated for AWS Native Chef Stack marketplace ${VER_MARKETPLACE} on $(date)" > TIMESTAMP
 
 echo ">>> Downloading and caching install scripts"
-curl -s -OL https://raw.githubusercontent.com/chef-customers/aws_native_chef_server/master/files/main.sh
+curl -s -OL https://aws-native-chef-server.s3.amazonaws.com/${VER_MARKETPLACE}/files/main.sh
 chmod +x main.sh
 
 echo ">>> Downloading and caching packages"
-curl -s -OL ${DL_BASEURL}/chef-server/${VER_CHEFSERVER}/el/7/chef-server-core-${VER_CHEFSERVER}-1.el7.x86_64.rpm
+# Temporarily switch chef-server to current
+#curl -s -OL ${DL_BASEURL}/${DL_CHANNEL}/chef-server/${VER_CHEFSERVER}/el/7/chef-server-core-${VER_CHEFSERVER}-1.el7.x86_64.rpm
+curl -s -OL ${DL_BASEURL}/current/chef-server/${VER_CHEFSERVER}/el/7/chef-server-core-${VER_CHEFSERVER}-1.el7.x86_64.rpm
 ln -s chef-server-core-${VER_CHEFSERVER}-1.el7.x86_64.rpm chef-server-core.rpm
 
-curl -s -OL ${DL_BASEURL}/chef-manage/${VER_MANAGE}/el/7/chef-manage-${VER_MANAGE}-1.el7.x86_64.rpm
+curl -s -OL ${DL_BASEURL}/${DL_CHANNEL}/chef-manage/${VER_MANAGE}/el/7/chef-manage-${VER_MANAGE}-1.el7.x86_64.rpm
 ln -s chef-manage-${VER_MANAGE}-1.el7.x86_64.rpm chef-manage.rpm
 
-curl -s -OL ${DL_BASEURL}/opscode-push-jobs-server/${VER_PJS}/el/7/opscode-push-jobs-server-${VER_PJS}-1.el7.x86_64.rpm
+# temporary switch PJS to current
+#curl -s -OL ${DL_BASEURL}/${DL_CHANNEL}/opscode-push-jobs-server/${VER_PJS}/el/7/opscode-push-jobs-server-${VER_PJS}-1.el7.x86_64.rpm
+curl -s -OL ${DL_BASEURL}/current/opscode-push-jobs-server/${VER_PJS}/el/7/opscode-push-jobs-server-${VER_PJS}-1.el7.x86_64.rpm
 ln -s opscode-push-jobs-server-${VER_PJS}-1.el7.x86_64.rpm push-jobs-server.rpm
 
-curl -s -OL ${DL_BASEURL}/supermarket/${VER_SUPERMARKET}/el/7/supermarket-${VER_SUPERMARKET}-1.el7.x86_64.rpm
+curl -s -OL ${DL_BASEURL}/${DL_CHANNEL}/supermarket/${VER_SUPERMARKET}/el/7/supermarket-${VER_SUPERMARKET}-1.el7.x86_64.rpm
 ln -s supermarket-${VER_SUPERMARKET}-1.el7.x86_64.rpm supermarket.rpm
 
-curl https://packages.chef.io/files/current/automate/latest/chef-automate_linux_amd64.zip | gunzip - > chef-automate && chmod +x chef-automate
+curl -s https://packages.chef.io/files/current/automate/latest/chef-automate_linux_amd64.zip | gunzip - > chef-automate && chmod +x chef-automate
 ./chef-automate airgap bundle create chef-automate.bundle
 
 echo ">>> Installing nightly snapshot script"
